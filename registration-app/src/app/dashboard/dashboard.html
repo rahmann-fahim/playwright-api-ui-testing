@@ -1,0 +1,282 @@
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="logo">
+
+      <div class="logo-icon">
+        F
+      </div>
+
+      <div>
+        <h2>FAHIM CODE HUB</h2>
+        <span>Management System</span>
+      </div>
+
+    </div>
+
+    <nav class="nav-menu">
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+      >
+        <span>⌂</span>
+        Dashboard
+      </a>
+
+      <a
+        routerLink="/users"
+        routerLinkActive="active"
+      >
+        <span>👥</span>
+        Registered Users
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <button
+        class="logout-btn"
+        type="button"
+        (click)="logout()"
+      >
+        <span>↪</span>
+        Logout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+
+      <div>
+
+        <h1>Dashboard</h1>
+
+        <p>
+          Welcome back, {{ userName() }}!
+        </p>
+
+      </div>
+
+
+      <!-- User Info -->
+      <div class="user-badge">
+
+        <div class="avatar">
+          {{ userName().charAt(0).toUpperCase() }}
+        </div>
+
+        <div>
+
+          <strong>
+            {{ userName() }}
+          </strong>
+
+          <small>
+            Authenticated
+          </small>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- Dashboard Content -->
+    <section class="content">
+
+
+      <!-- Statistics -->
+      <div class="stats-grid">
+
+
+        <!-- Total Users -->
+        <div class="stat-card">
+
+          <div class="stat-icon blue">
+            👥
+          </div>
+
+          <div>
+
+            <span>
+              Total Users
+            </span>
+
+            <h2>
+              {{ totalUsers() }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <!-- Authentication -->
+        <div class="stat-card">
+
+          <div class="stat-icon green">
+            ✓
+          </div>
+
+          <div>
+
+            <span>
+              Authentication
+            </span>
+
+            <h2>
+              Active
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <!-- Security -->
+        <div class="stat-card">
+
+          <div class="stat-icon purple">
+            🔐
+          </div>
+
+          <div>
+
+            <span>
+              Security
+            </span>
+
+            <h2>
+              JWT Protected
+            </h2>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- Welcome Card -->
+      <div class="welcome-card">
+
+        <div>
+
+          <span class="welcome-label">
+            AUTHENTICATED SESSION
+          </span>
+
+          <h2>
+            Welcome, {{ userName() }}
+          </h2>
+
+          <p>
+            You are successfully authenticated
+            to FAHIM CODE HUB using JWT
+            token-based authentication.
+          </p>
+
+        </div>
+
+
+        <div class="security-badge">
+
+          <span>●</span>
+
+          Secure Session
+
+        </div>
+
+      </div>
+
+
+      <!-- Quick Actions -->
+      <div class="section-header">
+
+        <div>
+
+          <h2>
+            Quick Actions
+          </h2>
+
+          <p>
+            Manage your application from here.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="action-grid">
+
+
+        <!-- Registered Users -->
+        <div class="action-card">
+
+          <div class="action-icon">
+            👥
+          </div>
+
+          <h3>
+            Registered Users
+          </h3>
+
+          <p>
+            View all registered users and
+            their account information.
+          </p>
+
+          <button
+            type="button"
+            routerLink="/users"
+          >
+            View Users →
+          </button>
+
+        </div>
+
+
+        <!-- Protected Route -->
+        <div class="action-card">
+
+          <div class="action-icon">
+            🔒
+          </div>
+
+          <h3>
+            Protected Route
+          </h3>
+
+          <p>
+            This dashboard is accessible only
+            when a valid JWT token is available.
+          </p>
+
+          <span class="protected-status">
+            ● Protected
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

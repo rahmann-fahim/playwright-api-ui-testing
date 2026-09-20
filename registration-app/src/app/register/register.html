@@ -1,0 +1,71 @@
+<div class="container">
+
+  <div class="card">
+
+    <h1>Create Account</h1>
+
+    <p class="subtitle">
+      Register your account
+    </p>
+
+    <label>Full Name</label>
+
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="name"
+      placeholder="Enter your name"
+    >
+
+    <label>Email</label>
+
+    <input
+      type="email"
+      name="email"
+      [(ngModel)]="email"
+      placeholder="Enter your email"
+    >
+
+    <label>Password</label>
+
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      placeholder="Enter password"
+    >
+
+    <button
+      type="button"
+      (click)="register()"
+    >
+      Register
+    </button>
+
+    @if (message()) {
+      <p class="success">
+        {{ message() }}
+      </p>
+    }
+
+    @if (error()) {
+      <p class="error">
+        {{ error() }}
+      </p>
+    }
+
+    <p class="login-link">
+      Already have an account?
+    </p>
+
+    <button
+      type="button"
+      class="secondary-button"
+      (click)="goToLogin()"
+    >
+      Login
+    </button>
+
+  </div>
+
+</div>

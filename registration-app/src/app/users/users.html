@@ -1,0 +1,255 @@
+<div class="users-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div>
+      <span class="page-label">
+        USER MANAGEMENT
+      </span>
+
+      <h1>
+        Registered Users
+      </h1>
+
+      <p>
+        Manage and view all registered users.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="getUsers()"
+    >
+      ↻ Refresh
+    </button>
+
+  </div>
+
+
+  <!-- User List Card -->
+  <div class="users-card">
+
+
+    <!-- Card Header -->
+    <div class="card-header">
+
+      <div>
+        <h2>
+          User Directory
+        </h2>
+
+        <span>
+          {{ filteredUsers().length }} users found
+        </span>
+      </div>
+
+
+      <!-- Search -->
+      <div class="search-box">
+
+        <span class="search-icon">
+          🔍
+        </span>
+
+        <input
+          type="text"
+          placeholder="Search by name or email..."
+          (input)="updateSearch($event)"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- Loading -->
+    @if (loading()) {
+
+      <div class="loading-state">
+
+        <div class="loader"></div>
+
+        <p>
+          Loading users...
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- Error -->
+    @else if (error()) {
+
+      <div class="error-state">
+
+        <div class="error-icon">
+          !
+        </div>
+
+        <h3>
+          Unable to load users
+        </h3>
+
+        <p>
+          {{ error() }}
+        </p>
+
+        <button
+          type="button"
+          (click)="getUsers()"
+        >
+          Try Again
+        </button>
+
+      </div>
+
+    }
+
+
+    <!-- No Users -->
+    @else if (filteredUsers().length === 0) {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          👥
+        </div>
+
+        <h3>
+          No users found
+        </h3>
+
+        <p>
+          No registered users match your search.
+        </p>
+
+      </div>
+
+    }
+
+
+    <!-- Users Table -->
+    @else {
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                #
+              </th>
+
+              <th>
+                User
+              </th>
+
+              <th>
+                Email Address
+              </th>
+
+              <th>
+                Status
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              user of filteredUsers();
+              track user.id
+            ) {
+
+              <tr>
+
+                <!-- ID -->
+                <td>
+
+                  <span class="user-id">
+                    #{{ user.id }}
+                  </span>
+
+                </td>
+
+
+                <!-- User -->
+                <td>
+
+                  <div class="user-info">
+
+                    <div class="user-avatar">
+
+                      {{
+                        user.name
+                          ?.charAt(0)
+                          ?.toUpperCase()
+                      }}
+
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        {{ user.name }}
+                      </strong>
+
+                      <small>
+                        Registered User
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- Email -->
+                <td>
+
+                  <span class="email">
+                    {{ user.email }}
+                  </span>
+
+                </td>
+
+
+                <!-- Status -->
+                <td>
+
+                  <span class="status-badge">
+
+                    <span class="status-dot">
+                    </span>
+
+                    Active
+
+                  </span>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

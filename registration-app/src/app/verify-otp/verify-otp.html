@@ -1,0 +1,47 @@
+<div class="container">
+
+  <div class="card">
+
+    <h1>Verify OTP</h1>
+
+    <p class="subtitle">
+      Enter the OTP to complete registration
+    </p>
+
+    <p class="demo-otp">
+      Demo OTP:
+      <strong>123456</strong>
+    </p>
+
+    <label>OTP</label>
+
+    <input
+      type="text"
+      name="otp"
+      [(ngModel)]="otp"
+      placeholder="Enter 6 digit OTP"
+      maxlength="6"
+    >
+
+    <button
+      type="button"
+      (click)="verifyOtp()"
+    >
+      Verify OTP
+    </button>
+
+    @if (message()) {
+      <p class="success">
+        {{ message() }}
+      </p>
+    }
+
+    @if (error()) {
+      <p class="error">
+        {{ error() }}
+      </p>
+    }
+
+  </div>
+
+</div>

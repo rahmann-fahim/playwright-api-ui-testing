@@ -1,0 +1,58 @@
+<div class="container">
+
+  <div class="card">
+
+    <h1>Login</h1>
+
+    <p class="subtitle">
+      Login to your account
+    </p>
+
+    <div>
+
+      <label>Email</label>
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        placeholder="Enter your email"
+      >
+
+      <label>Password</label>
+
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+      >
+
+      <button
+        type="button"
+        (click)="login()"
+      >
+        Login
+      </button>
+
+    </div>
+
+    @if (message()) {
+
+      <p class="success">
+        {{ message() }}
+      </p>
+
+    }
+
+    @if (error()) {
+
+      <p class="error">
+        {{ error() }}
+      </p>
+
+    }
+
+  </div>
+
+</div>

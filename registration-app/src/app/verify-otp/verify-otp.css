@@ -1,0 +1,273 @@
+/* ================================
+   OTP Verification Page
+================================ */
+
+.container {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(108, 26, 26, 0.18),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #6C1A1A 0%,
+      #481313 45%,
+      #241010 100%
+    );
+}
+
+
+/* ================================
+   Card
+================================ */
+
+.card {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 38px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.28);
+}
+
+
+/* ================================
+   Heading
+================================ */
+
+h1 {
+  margin: 0 0 8px;
+
+  text-align: center;
+
+  color: #6C1A1A;
+
+  font-size: 28px;
+  font-weight: 750;
+}
+
+
+/* ================================
+   Subtitle
+================================ */
+
+.subtitle {
+  margin: 0 0 20px;
+
+  text-align: center;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* ================================
+   Demo OTP
+================================ */
+
+.demo-otp {
+  margin: 0 0 22px;
+
+  padding: 12px;
+
+  text-align: center;
+
+  background: #f8eeee;
+
+  border-radius: 8px;
+
+  color: #6C1A1A;
+
+  font-size: 13px;
+}
+
+.demo-otp strong {
+  color: #2A6B5C;
+}
+
+
+/* ================================
+   Label
+================================ */
+
+label {
+  display: block;
+
+  margin-top: 20px;
+  margin-bottom: 7px;
+
+  color: #3d3434;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   OTP Input
+================================ */
+
+input {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #ddd4d4;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #2d2525;
+
+  font-size: 16px;
+
+  text-align: center;
+
+  letter-spacing: 4px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: #6C1A1A;
+
+  box-shadow:
+    0 0 0 3px rgba(108, 26, 26, 0.10);
+}
+
+
+/* ================================
+   Verify Button
+================================ */
+
+button {
+  width: 100%;
+
+  margin-top: 20px;
+
+  padding: 13px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #2A6B5C;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+button:hover {
+  background: #215748;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 18px rgba(42, 107, 92, 0.25);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+
+/* ================================
+   Success Message
+================================ */
+
+.success {
+  margin-top: 15px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+  background: #edf8f2;
+
+  color: #24734d;
+
+  font-size: 13px;
+}
+
+
+/* ================================
+   Error Message
+================================ */
+
+.error {
+  margin-top: 15px;
+
+  padding: 10px;
+
+  border-radius: 8px;
+
+  text-align: center;
+
+  background: #fff0f0;
+
+  color: #b42323;
+
+  font-size: 13px;
+}
+
+
+/* ================================
+   Responsive
+================================ */
+
+@media (max-width: 500px) {
+
+  .container {
+    padding: 18px;
+  }
+
+  .card {
+    padding: 28px 22px;
+
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+}
