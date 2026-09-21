@@ -1,6 +1,6 @@
 # Playwright UI & API Test Automation
 
-End-to-end UI and API test automation for a registration web application using Playwright and TypeScript.
+Comprehensive UI and API test automation for a full-stack web application using Playwright and TypeScript.
 
 ## Project Overview
 
