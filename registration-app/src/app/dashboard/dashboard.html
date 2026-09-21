@@ -16,16 +16,22 @@
 
     </div>
 
+
+    <!-- Navigation -->
     <nav class="nav-menu">
 
+      <!-- Dashboard -->
       <a
         routerLink="/dashboard"
         routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         <span>⌂</span>
         Dashboard
       </a>
 
+
+      <!-- Registered Users -->
       <a
         routerLink="/users"
         routerLinkActive="active"
@@ -34,8 +40,30 @@
         Registered Users
       </a>
 
+
+      <!-- Products -->
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+      >
+        <span>📦</span>
+        Products
+      </a>
+
+
+      <!-- Sales -->
+      <a
+        routerLink="/sales"
+        routerLinkActive="active"
+      >
+        <span>💰</span>
+        Sales
+      </a>
+
     </nav>
 
+
+    <!-- Sidebar Bottom -->
     <div class="sidebar-bottom">
 
       <button
@@ -52,8 +80,10 @@
   </aside>
 
 
+
   <!-- Main Content -->
   <main class="main-content">
+
 
     <!-- Top Bar -->
     <header class="topbar">
@@ -91,6 +121,7 @@
       </div>
 
     </header>
+
 
 
     <!-- Dashboard Content -->
@@ -170,6 +201,7 @@
       </div>
 
 
+
       <!-- Welcome Card -->
       <div class="welcome-card">
 
@@ -203,6 +235,7 @@
       </div>
 
 
+
       <!-- Quick Actions -->
       <div class="section-header">
 
@@ -221,6 +254,8 @@
       </div>
 
 
+
+      <!-- Action Cards -->
       <div class="action-grid">
 
 
@@ -250,6 +285,61 @@
         </div>
 
 
+
+        <!-- Products -->
+        <div class="action-card">
+
+          <div class="action-icon">
+            📦
+          </div>
+
+          <h3>
+            Products
+          </h3>
+
+          <p>
+            Add, update, view and manage
+            your product inventory.
+          </p>
+
+          <button
+            type="button"
+            routerLink="/products"
+          >
+            Manage Products →
+          </button>
+
+        </div>
+
+
+
+        <!-- Sales -->
+        <div class="action-card">
+
+          <div class="action-icon">
+            💰
+          </div>
+
+          <h3>
+            Sales
+          </h3>
+
+          <p>
+            Create and manage sales
+            transactions and stock movement.
+          </p>
+
+          <button
+            type="button"
+            routerLink="/sales"
+          >
+            Manage Sales →
+          </button>
+
+        </div>
+
+
+
         <!-- Protected Route -->
         <div class="action-card">
 
@@ -274,6 +364,7 @@
 
 
       </div>
+
 
     </section>
 

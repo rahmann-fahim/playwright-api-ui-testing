@@ -5,6 +5,9 @@ import { Register } from './register/register';
 import { VerifyOtp } from './verify-otp/verify-otp';
 import { Dashboard } from './dashboard/dashboard';
 import { Users } from './users/users';
+import { Products } from './products/products';
+import { Sales } from './sales/sales';
+
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
@@ -38,6 +41,20 @@ export const routes: Routes = [
   {
     path: 'users',
     component: Users,
+    canActivate: [authGuard]
+  },
+
+  // Protected Products
+  {
+    path: 'products',
+    component: Products,
+    canActivate: [authGuard]
+  },
+
+  // Protected Sales
+  {
+    path: 'sales',
+    component: Sales,
     canActivate: [authGuard]
   },
 

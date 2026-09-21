@@ -1,0 +1,646 @@
+<div class="products-page">
+
+
+    <!-- =========================
+     PAGE NAVIGATION
+    ========================== -->
+
+   <nav class="page-navigation">
+
+  <a
+    routerLink="/dashboard"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <span>⌂</span>
+    Dashboard
+  </a>
+
+  <a
+    routerLink="/users"
+    routerLinkActive="active"
+  >
+    <span>👥</span>
+    Registered Users
+  </a>
+
+  <a
+    routerLink="/products"
+    routerLinkActive="active"
+  >
+    <span>📦</span>
+    Products
+  </a>
+
+  <a
+    routerLink="/sales"
+    routerLinkActive="active"
+  >
+    <span>💰</span>
+    Sales
+  </a>
+
+</nav>
+
+
+  <!-- =========================
+       SUCCESS TOAST
+  ========================== -->
+
+  @if (message()) {
+
+    <div class="success-toast">
+
+      <div class="toast-icon">
+        ✓
+      </div>
+
+      <div>
+        <strong>
+          Success
+        </strong>
+
+        <span>
+          {{ message() }}
+        </span>
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        (click)="message.set('')"
+      >
+        ×
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- =========================
+       PAGE HEADER
+  ========================== -->
+
+  <header class="page-header">
+
+    <div>
+
+      <span class="page-label">
+        INVENTORY MANAGEMENT
+      </span>
+
+      <h1>
+        Products
+      </h1>
+
+      <p>
+        Manage your products, pricing and stock inventory.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="getProducts()"
+    >
+      ↻ Refresh
+    </button>
+
+  </header>
+
+
+  <!-- =========================
+       SUMMARY
+  ========================== -->
+
+  <section class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon products-icon">
+        📦
+      </div>
+
+      <div>
+
+        <span>
+          Total Products
+        </span>
+
+        <strong>
+          {{ products().length }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon stock-icon">
+        📊
+      </div>
+
+      <div>
+
+        <span>
+          Total Stock
+        </span>
+
+        <strong>
+          {{
+            products().reduce(
+              (total, product) =>
+              total + (product.quantity || 0),
+              0
+            )
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon value-icon">
+        ৳
+      </div>
+
+      <div>
+
+        <span>
+          Inventory Value
+        </span>
+
+        <strong>
+          ৳{{
+            products().reduce(
+              (total, product) =>
+              total +
+              ((product.price || 0) *
+              (product.quantity || 0)),
+              0
+            )
+            | number:'1.0-2'
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CONTENT
+  ========================== -->
+
+  <section class="content-grid">
+
+
+    <!-- PRODUCT FORM -->
+
+    <div class="product-form-card">
+
+      <div class="card-title">
+
+        <div>
+
+          <span class="section-label">
+            PRODUCT DETAILS
+          </span>
+
+          <h2>
+
+            {{
+              editingId === null
+                ? 'Add New Product'
+                : 'Edit Product'
+            }}
+
+          </h2>
+
+        </div>
+
+
+        @if (editingId !== null) {
+
+          <button
+            type="button"
+            class="cancel-btn"
+            (click)="clearForm()"
+          >
+            Cancel
+          </button>
+
+        }
+
+      </div>
+
+
+      <div class="form-body">
+
+        <div class="form-group">
+
+          <label>
+            Product Name
+          </label>
+
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="e.g. Wireless Mouse"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Category
+          </label>
+
+          <input
+            type="text"
+            name="category"
+            [(ngModel)]="category"
+            placeholder="e.g. Electronics"
+          >
+
+        </div>
+
+
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label>
+              Price
+            </label>
+
+            <div class="input-with-symbol">
+
+              <span>
+                ৳
+              </span>
+
+              <input
+                type="number"
+                name="price"
+                [(ngModel)]="price"
+                placeholder="0.00"
+                min="0"
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Quantity
+            </label>
+
+            <input
+              type="number"
+              name="quantity"
+              [(ngModel)]="quantity"
+              placeholder="0"
+              min="0"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="save-btn"
+          (click)="saveProduct()"
+        >
+
+          {{
+            editingId === null
+              ? '+ Add Product'
+              : '✓ Update Product'
+          }}
+
+        </button>
+
+
+        @if (error()) {
+
+          <div class="error-message">
+
+            <span>
+              !
+            </span>
+
+            {{ error() }}
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT LIST -->
+
+    <div class="product-list-card">
+
+      <div class="list-header">
+
+        <div>
+
+          <span class="section-label">
+            PRODUCT CATALOG
+          </span>
+
+          <h2>
+            All Products
+          </h2>
+
+          <p>
+            {{ products().length }}
+            products in inventory
+          </p>
+
+        </div>
+
+      </div>
+
+
+      @if (products().length === 0) {
+
+        <div class="empty-state">
+
+          <div class="empty-icon">
+            📦
+          </div>
+
+          <h3>
+            No products yet
+          </h3>
+
+          <p>
+            Add your first product using the form.
+          </p>
+
+        </div>
+
+      }
+
+      @else {
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>PRODUCT</th>
+                <th>CATEGORY</th>
+                <th>PRICE</th>
+                <th>STOCK</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              @for (
+                product of products();
+                track product.id
+              ) {
+
+                <tr>
+
+                  <td>
+
+                    <div class="product-info">
+
+                      <div class="product-avatar">
+
+                        {{
+                          product.name
+                            ?.charAt(0)
+                            ?.toUpperCase()
+                        }}
+
+                      </div>
+
+                      <div>
+
+                        <strong>
+                          {{ product.name }}
+                        </strong>
+
+                        <small>
+                          ID #{{ product.id }}
+                        </small>
+
+                      </div>
+
+                    </div>
+
+                  </td>
+
+
+                  <td>
+
+                    <span class="category-badge">
+                      {{ product.category }}
+                    </span>
+
+                  </td>
+
+
+                  <td>
+
+                    <span class="price">
+                      ৳{{ product.price | number:'1.2-2' }}
+                    </span>
+
+                  </td>
+
+
+                  <td>
+
+                    <span class="stock-number">
+                      {{ product.quantity }}
+                    </span>
+
+                  </td>
+
+
+                  <td>
+
+                    @if (product.quantity === 0) {
+
+                      <span class="status out-of-stock">
+                        <span></span>
+                        Out of Stock
+                      </span>
+
+                    }
+
+                    @else if (product.quantity <= 5) {
+
+                      <span class="status low-stock">
+                        <span></span>
+                        Low Stock
+                      </span>
+
+                    }
+
+                    @else {
+
+                      <span class="status in-stock">
+                        <span></span>
+                        In Stock
+                      </span>
+
+                    }
+
+                  </td>
+
+
+                  <td>
+
+                    <div class="action-buttons">
+
+                      <button
+                        type="button"
+                        class="edit-btn"
+                        (click)="editProduct(product)"
+                        title="Edit product"
+                      >
+                        ✎
+                      </button>
+
+
+                      <button
+                        type="button"
+                        class="delete-btn"
+                        (click)="deleteProduct(product)"
+                        title="Delete product"
+                      >
+                        🗑
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       DELETE MODAL
+  ========================== -->
+
+  @if (showDeleteModal()) {
+
+    <div
+      class="modal-backdrop"
+      (click)="closeDeleteModal()"
+    >
+
+      <div
+        class="delete-modal"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="delete-modal-icon">
+          !
+        </div>
+
+
+        <div class="delete-modal-content">
+
+          <h2>
+            Delete Product?
+          </h2>
+
+          <p>
+
+            Are you sure you want to delete
+
+            <strong>
+              "{{ productToDelete()?.name }}"
+            </strong>
+
+            ?
+
+          </p>
+
+          <span class="delete-warning">
+            This action cannot be undone.
+          </span>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="modal-cancel-btn"
+            (click)="closeDeleteModal()"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="button"
+            class="modal-delete-btn"
+            (click)="confirmDelete()"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

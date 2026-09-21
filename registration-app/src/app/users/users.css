@@ -1,3 +1,73 @@
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+.page-navigation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-bottom: 24px;
+  padding: 6px;
+
+  background: #ffffff;
+
+  border: 1px solid #e6eaef;
+  border-radius: 10px;
+
+  box-shadow:
+    0 3px 12px rgba(31, 41, 55, 0.04);
+}
+
+.page-navigation a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 13px;
+
+  border-radius: 7px;
+
+  color: #687280;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.page-navigation a span {
+  font-size: 13px;
+}
+
+.page-navigation a:hover {
+  background: #f3f7f5;
+  color: #2a6b5c;
+}
+
+.page-navigation a.active {
+  background: #edf6f3;
+  color: #2a6b5c;
+}
+
+@media (max-width: 700px) {
+
+  .page-navigation {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .page-navigation a {
+    flex-shrink: 0;
+  }
+
+}
+
+
 /* ================================
    Users Page
 ================================ */

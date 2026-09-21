@@ -1,0 +1,493 @@
+@if (message()) {
+  <div class="success-toast">
+
+    <div class="toast-icon">
+      ✓
+    </div>
+
+    <div>
+      <strong>Success</strong>
+      <span>{{ message() }}</span>
+    </div>
+
+    <button
+      type="button"
+      class="toast-close"
+      (click)="message.set('')">
+      ×
+    </button>
+
+  </div>
+}
+
+
+<div class="sales-page">
+    <nav class="page-navigation">
+
+  <a
+    routerLink="/dashboard"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <span>⌂</span>
+    Dashboard
+  </a>
+
+  <a
+    routerLink="/users"
+    routerLinkActive="active"
+  >
+    <span>👥</span>
+    Registered Users
+  </a>
+
+  <a
+    routerLink="/products"
+    routerLinkActive="active"
+  >
+    <span>📦</span>
+    Products
+  </a>
+
+  <a
+    routerLink="/sales"
+    routerLinkActive="active"
+  >
+    <span>💰</span>
+    Sales
+  </a>
+
+</nav>
+
+  <!-- =========================
+       PAGE HEADER
+  ========================== -->
+
+  <div class="page-header">
+
+    <div>
+      <div class="eyebrow">
+        SALES MANAGEMENT
+      </div>
+
+      <h1>Sales</h1>
+
+      <p>
+        Manage sales transactions and monitor stock movement.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SUMMARY CARDS
+  ========================== -->
+
+  <div class="summary-grid">
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        $
+      </div>
+
+      <div>
+        <span>Total Sales</span>
+
+        <strong>
+          {{ getTotalSales() | number:'1.2-2' }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        #
+      </div>
+
+      <div>
+        <span>Total Items Sold</span>
+
+        <strong>
+          {{ getTotalQuantity() }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <div class="summary-icon">
+        ✓
+      </div>
+
+      <div>
+        <span>Total Transactions</span>
+
+        <strong>
+          {{ sales().length }}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       SALE FORM
+  ========================== -->
+
+  <div class="form-card">
+
+    <div class="section-title">
+
+      <div>
+        <h2>
+          {{ editingId === null
+            ? 'Create New Sale'
+            : 'Update Sale' }}
+        </h2>
+
+        <p>
+          Select a product and enter the quantity.
+        </p>
+      </div>
+
+    </div>
+
+
+    <form
+      (ngSubmit)="saveSale()"
+      class="sale-form">
+
+      <div class="form-group">
+
+        <label for="product">
+          Product
+        </label>
+
+        <select
+          id="product"
+          name="product"
+          [(ngModel)]="selectedProductId">
+
+          <option [ngValue]="null">
+            Select a product
+          </option>
+
+          @for (product of products(); track product.id) {
+
+            <option
+              [ngValue]="product.id"
+              [disabled]="product.quantity <= 0">
+
+              {{ product.name }}
+              —
+              Stock: {{ product.quantity }}
+              —
+              {{ product.price | number:'1.2-2' }}
+
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="quantity">
+          Quantity
+        </label>
+
+        <input
+          id="quantity"
+          name="quantity"
+          type="number"
+          min="1"
+          [(ngModel)]="quantity"
+          placeholder="Enter quantity">
+
+      </div>
+
+
+      <div class="form-actions">
+
+        @if (editingId !== null) {
+
+          <button
+            type="button"
+            class="secondary-button"
+            (click)="clearForm()">
+
+            Cancel
+
+          </button>
+
+        }
+
+        <button
+          type="submit"
+          class="primary-button">
+
+          {{ editingId === null
+            ? 'Create Sale'
+            : 'Update Sale' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <!-- =========================
+       ERROR MESSAGE
+  ========================== -->
+
+  @if (error()) {
+
+    <div class="error-message">
+
+      <span>!</span>
+
+      {{ error() }}
+
+    </div>
+
+  }
+
+
+  <!-- =========================
+       SALES TABLE
+  ========================== -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>
+          Sales Transactions
+        </h2>
+
+        <p>
+          Complete history of sales transactions.
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="refresh-button"
+        (click)="getSales(); getProducts()">
+
+        ↻ Refresh
+
+      </button>
+
+    </div>
+
+
+    @if (sales().length > 0) {
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>ID</th>
+
+              <th>Product</th>
+
+              <th>Quantity</th>
+
+              <th>Unit Price</th>
+
+              <th>Total Price</th>
+
+              <th>Sale Date</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (sale of sales(); track sale.id) {
+
+              <tr>
+
+                <td>
+                  <span class="sale-id">
+                    #{{ sale.id }}
+                  </span>
+                </td>
+
+                <td>
+
+                  <div class="product-name">
+
+                    <strong>
+                      {{ getProductName(sale) }}
+                    </strong>
+
+                  </div>
+
+                </td>
+
+                <td>
+                  {{ sale.quantity }}
+                </td>
+
+                <td>
+                  {{ sale.unitPrice | number:'1.2-2' }}
+                </td>
+
+                <td>
+
+                  <strong class="total-price">
+
+                    {{ sale.totalPrice | number:'1.2-2' }}
+
+                  </strong>
+
+                </td>
+
+                <td>
+
+                  {{ sale.saleDate | date:'dd MMM yyyy, hh:mm a' }}
+
+                </td>
+
+                <td>
+
+                  <div class="action-buttons">
+
+                    <button
+                      type="button"
+                      class="edit-button"
+                      (click)="editSale(sale)">
+
+                      Edit
+
+                    </button>
+
+                    <button
+                      type="button"
+                      class="delete-button"
+                      (click)="deleteSale(sale)">
+
+                      Delete
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+
+    @else {
+
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          $
+        </div>
+
+        <h3>
+          No sales found
+        </h3>
+
+        <p>
+          Create your first sale using the form above.
+        </p>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     DELETE CONFIRMATION MODAL
+========================== -->
+
+@if (showDeleteModal()) {
+
+  <div class="modal-backdrop">
+
+    <div class="delete-modal">
+
+      <div class="modal-icon">
+        !
+      </div>
+
+      <h2>
+        Delete Sale?
+      </h2>
+
+      <p>
+        Are you sure you want to delete this sale?
+        The sold quantity will be returned to product stock.
+      </p>
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="closeDeleteModal()">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="button"
+          class="danger-button"
+          (click)="confirmDelete()">
+
+          Delete Sale
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
